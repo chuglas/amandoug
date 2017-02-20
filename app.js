@@ -12,6 +12,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const User          = require("./models/user");
 const flash         = require("connect-flash");
 const expressLayouts = require('express-ejs-layouts');
+const MongoStore = require('connect-mongo')(session);
 
 
 // MONGOOSE CONNECT
@@ -23,6 +24,7 @@ mongoose.connect("mongodb://localhost/amandoug-database");
 var index = require('./routes/index');
 var users = require('./routes/users');
 const authController = require("./routes/authController");
+const events = require("./routes/events");
 
 var app = express();
 
@@ -82,9 +84,22 @@ passport.use(new LocalStrategy({
   });
 }));
 
+
+app.use((req, res, next) => {
+  if (req.session.passport) {
+    res.locals.currentUserId = req.session.passport.user;
+    res.locals.isUserLoggedIn = true;
+  } else {
+    res.locals.isUserLoggedIn = false;
+  }
+
+  next();
+});
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/', authController);
+app.use('/', events);
 
 
 // catch 404 and forward to error handler

@@ -54,7 +54,7 @@ authController.get("/login", (req, res, next) => {
 });
 
 authController.post("/login", passport.authenticate("local", {
-  successRedirect: "/profile-page",
+  successRedirect: "/new-event",
   failureRedirect: "/login",
   failureFlash: true,
   passReqToCallback: true
@@ -62,6 +62,7 @@ authController.post("/login", passport.authenticate("local", {
 
 authController.get("/profile-page", ensureLogin.ensureLoggedIn(), (req, res) => {
   res.render("auth/profile", { user: req.user });
+  // console.log(req.user);
 });
 
 authController.get("/logout", (req, res) => {

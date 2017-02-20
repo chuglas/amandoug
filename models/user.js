@@ -14,6 +14,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password Required']
   },
+  userEvents: [],
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
