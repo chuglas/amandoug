@@ -1,0 +1,17 @@
+<h1> <%= eventObject.name %> </h1>
+<h1> <%= eventObject.description %> </h1>
+
+<% eventObject.eventPhotos.forEach((onePhoto) => { %>
+  <img src="<%= onePhoto.url_path %>" />
+<% }) %>
+
+
+<section>
+  <h2>Upload your photo</h2>
+  <form action='/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Photo Name">
+    <input type="text" name="description" placeholder="Photo Caption">
+    <input type="file" name="file">
+    <input type="submit" value="Save">
+  </form>
+</section>

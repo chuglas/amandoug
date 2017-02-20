@@ -15,6 +15,7 @@ const eventSchema = new Schema({
     type: Date,
     required: [true, 'Date Required']
   },
+  eventPhotos: []
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
