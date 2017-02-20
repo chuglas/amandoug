@@ -3,7 +3,7 @@
 <ul>
   <% user.userEvents.forEach((oneEvent) => { %>
     <li>
-      <h3> <%= oneEvent.name %> </h3>
+      <h3> <a href='/events/<%= oneEvent._id %>'><%= oneEvent.name %> </a></h3>
     </li>
   <% }) %>
 </ul>

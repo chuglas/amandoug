@@ -54,7 +54,7 @@ authController.get("/login", (req, res, next) => {
 });
 
 authController.post("/login", passport.authenticate("local", {
-  successRedirect: "/new-event",
+  successRedirect: "/profile-page",
   failureRedirect: "/login",
   failureFlash: true,
   passReqToCallback: true
