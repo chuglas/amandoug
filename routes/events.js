@@ -1,5 +1,7 @@
 const express = require('express');
 const multer  = require('multer');
+const passport       = require("passport");
+const ensureLogin    = require("connect-ensure-login");
 const User = require('../models/user');
 const Event = require('../models/event');
 const Photo = require('../models/photo');
@@ -8,20 +10,12 @@ const Photo = require('../models/photo');
 
 const router = express.Router();
 
-// router.use((req, res, next) => {
-//   if(req.session.currentUser){
-//     next();
-//     return;
-//   }
-//
-//   res.redirect('/login');
-// });
 
-router.get('/new-event', (req, res, next) => {
+router.get('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render('new-event');
 })
 
-router.post('/new-event', (req, res, next) => {
+router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const eventInfo = {
     name: req.body.name,
     user: res.locals.currentUserId,
@@ -36,17 +30,6 @@ router.post('/new-event', (req, res, next) => {
     return;
   }
 
-  // console.log('currentUserId : ' + res.locals.currentUserId)
-  // User.findById(res.locals.currentUserId, (err, user)=>{
-  //   if (err) {return next(err);}
-  //
-  //   console.log('whole user: ' + user)
-  //   console.log('USER EVENTS:  ', user.userEvents);
-  //   console.log('NEW event:', newEvent);
-  //   user.userEvents.push(newEvent);
-  //   $push: { user.userEvents: newEvent};
-  // })
-
   User.findByIdAndUpdate(
     res.locals.currentUserId,
     {$push: {userEvents: newEvent}},
@@ -60,8 +43,11 @@ router.post('/new-event', (req, res, next) => {
   })
 });
 
+// ------------------------------------------------------------------------------
+// RENDERING EVENT PAGE
+// ------------------------------------------------------------------------------
 
-router.get('/events/:eventId', (req, res, next) => {
+router.get('/events/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   var eventId = req.params.eventId;
 
   Event.findById(eventId, (err, eventObject) => {
@@ -72,10 +58,13 @@ router.get('/events/:eventId', (req, res, next) => {
 
 })
 
+// ------------------------------------------------------------------------------
+// UPLOADING PHOTOS
+// ------------------------------------------------------------------------------
 
 var upload = multer({ dest: './public/uploads/' });
 
-router.post('/events/:eventId/upload', upload.single('file'), function(req, res){
+router.post('/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res){
 
   var eventIdParam = req.params.eventId;
 
@@ -88,10 +77,8 @@ router.post('/events/:eventId/upload', upload.single('file'), function(req, res)
 
   const newPic = new Photo(pic);
 
-  console.log('picture doc:  ' + newPic);
-
   newPic.save((err) => {
-      res.redirect('/profile-page');
+      res.redirect(`/events/${eventIdParam}`);
   });
 
   Event.findByIdAndUpdate(
@@ -105,4 +92,7 @@ router.post('/events/:eventId/upload', upload.single('file'), function(req, res)
 
 });
 
+// ------------------------------------------------------------------------------
+// EXPORT
+// ------------------------------------------------------------------------------
 module.exports = router;
