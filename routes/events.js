@@ -83,7 +83,7 @@ router.post('/events/:eventId/upload', upload.single('file'), function(req, res)
     eventId: eventIdParam,
     name: req.body.name,
     description: req.body.description,
-    url_path: `/public/uploads/${req.file.filename}`,
+    url_path: `/uploads/${req.file.filename}`,
   };
 
   const newPic = new Photo(pic);
@@ -93,6 +93,16 @@ router.post('/events/:eventId/upload', upload.single('file'), function(req, res)
   newPic.save((err) => {
       res.redirect('/profile-page');
   });
+
+  Event.findByIdAndUpdate(
+    eventIdParam,
+    {$push: {eventPhotos: newPic}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    }
+  );
+
 });
 
 module.exports = router;

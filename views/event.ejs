@@ -1,11 +1,9 @@
 <h1> <%= eventObject.name %> </h1>
 <h1> <%= eventObject.description %> </h1>
 
-<!-- <% eventObject.eventPhotos.forEach((onePhoto) => { %>
-  <li>
-    <h3> <a href='/events/<%= oneEvent._id %>'><%= oneEvent.name %> </a></h3>
-  </li>
-<% }) %> -->
+<% eventObject.eventPhotos.forEach((onePhoto) => { %>
+  <img src="<%= onePhoto.url_path %>" />
+<% }) %>
 
 
 <section>
