@@ -3,7 +3,7 @@ const Schema   = mongoose.Schema;
 const Event     = require("./event");
 
 const photoSchema = new Schema({
-  eventId: { type: Schema.Types.ObjectId, ref: 'Event' },
+  _eventId: { type: Schema.Types.ObjectId, ref: 'Event' },
   name: {
     type: String,
     required: [true, 'Name Required']

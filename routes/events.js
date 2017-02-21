@@ -28,6 +28,7 @@ router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
     let event = new Event(eventInfo);
     console.log("event", event);
     user.userEvents.push(event);
+    console.log("userEvents:", user.userEvents)
     user.save((err)=>{
       event.save((err, eventSaved)=>{
         console.log("eventSaved", eventSaved);
@@ -35,7 +36,6 @@ router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
         res.redirect(`/events/${eventSaved._id}`);
       })
     });
-
   })
   // newEvent.save((err, event) => {
   //   if (err) { next(err) }
@@ -60,12 +60,21 @@ router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
 router.get('/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   var eventId = req.params.eventId;
+  Event.findOne({_id: eventId })
+    .populate('eventPhotos')
 
-  Event.findById(eventId, (err, eventObject) => {
-    if (err) { return next(err); }
-    console.log("event object: " + eventObject)
-    res.render('event', { eventObject });
-  });
+    .exec((err, eventObject)=>{
+      if(err) { next(err)}
+      console.log('eventObject', eventObject);
+      res.render('event', { eventObject });
+      // res.send('da')
+    })
+  // Event.findById(eventId, (err, eventObject) => {
+  //   if (err) { return next(err); }
+  //   console.log("event object: " + eventObject)
+  //   res.render('event', { eventObject });
+  // });
+
 
 })
 
@@ -75,7 +84,7 @@ router.get('/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
 
 
-router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res){
+router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res, next){
 
   var eventIdParam = req.params.eventId;
 
@@ -86,20 +95,39 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
     url_path: `/uploads/${req.file.filename}`,
   };
 
-  const newPic = new Photo(pic);
+  // Event.findById(eventIdParam, (err, event)=>{
+  //   if (err) { next(err)}
+  //
+  //   event.eventPhotos.push()
+  // })
+  // const newPic = new Photo(pic);
+  //
+  // newPic.save((err) => {
+  //     res.redirect(`/events/${eventIdParam}`);
+  // });
 
-  newPic.save((err) => {
-      res.redirect(`/events/${eventIdParam}`);
-  });
+  Event.findById(eventIdParam, (err, event)=>{
+    console.log("event", event)
+    const newPic = new Photo(pic);
+    console.log("newPic", newPic);
+    event.eventPhotos.push(newPic);
+    event.save((err)=>{
+      newPic.save((err, picSaved)=>{
+        console.log("picSaved", picSaved);
+        if (err) { next(err) }
+        res.redirect(`/events/${eventIdParam}`);
+      })
+    });
+  })
 
-  Event.findByIdAndUpdate(
-    eventIdParam,
-    {$push: {eventPhotos: newPic}},
-    {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
-    }
-  );
+  // Event.findByIdAndUpdate(
+  //   eventIdParam,
+  //   {$push: {eventPhotos: newPic}},
+  //   {safe: true, upsert: true},
+  //   function(err, model) {
+  //       console.log(err);
+  //   }
+  // );
 
 });
 

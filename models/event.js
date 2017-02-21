@@ -15,8 +15,8 @@ const eventSchema = new Schema({
     type: Date,
     required: [true, 'Date Required']
   },
-  eventPhotos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }]
-}, {
+  eventPhotos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
+  }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
 
