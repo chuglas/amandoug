@@ -5,11 +5,11 @@ const ensureLogin    = require("connect-ensure-login");
 const User = require('../models/user');
 const Event = require('../models/event');
 const Photo = require('../models/photo');
-
-
+const upload = multer({ dest: './public/uploads/' });
 
 const router = express.Router();
 
+const ObjectID = require('mongodb').ObjectID;
 
 router.get('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render('new-event');
@@ -18,36 +18,46 @@ router.get('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
 router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const eventInfo = {
     name: req.body.name,
-    user: res.locals.currentUserId,
+    _user: res.locals.currentUserId,
     description: req.body.description,
     date: req.body.date
   };
-  const newEvent = new Event(eventInfo);
 
-  newEvent.save((err) => {
-    if (err) {
-    next(err);
-    return;
-  }
-
-  User.findByIdAndUpdate(
-    res.locals.currentUserId,
-    {$push: {userEvents: newEvent}},
-    {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
-    }
-  );
-
-  res.redirect(`/events/${newEvent.id}`);
-});
+  User.findById(res.locals.currentUserId, (err, user)=>{
+    console.log("user", user)
+    let event = new Event(eventInfo);
+    console.log("event", event);
+    user.userEvents.push(event);
+    user.save((err)=>{
+      event.save((err, eventSaved)=>{
+        console.log("eventSaved", eventSaved);
+        if (err) { next(err) }
+        res.redirect(`/events/${eventSaved._id}`);
+      })
+    });
+  })
+  // newEvent.save((err, event) => {
+  //   if (err) { next(err) }
+  //   User.findByIdAndUpdate(
+  //     res.locals.currentUserId,
+  //     {$push: {userEvents: ObjectID(event._id)}},
+  //     {safe: true, upsert: true},
+  //     function(err, model) {
+  //       if (err) {
+  //         next(err)
+  //       } else {
+  //         res.redirect(`/events/${event._id}`);
+  //       }
+  //     }
+  //   );
+  // })
 });
 
 // ------------------------------------------------------------------------------
 // RENDERING EVENT PAGE
 // ------------------------------------------------------------------------------
 
-router.get('/events/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+router.get('/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   var eventId = req.params.eventId;
 
   Event.findById(eventId, (err, eventObject) => {
@@ -62,9 +72,9 @@ router.get('/events/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) =>
 // UPLOADING PHOTOS
 // ------------------------------------------------------------------------------
 
-var upload = multer({ dest: './public/uploads/' });
 
-router.post('/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res){
+
+router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res){
 
   var eventIdParam = req.params.eventId;
 
@@ -93,6 +103,105 @@ router.post('/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.sing
   res.redirect(`/events/${eventIdParam}`);
 
 });
+
+// ------------------------------------------------------------------------------
+// DELETE
+// ------------------------------------------------------------------------------
+//
+router.post('/:eventId/delete', (req, res, next) => {
+  var eventId = req.params.eventId;
+  var userId = res.locals.currentUserId;
+  console.log("eventId: ", eventId);
+  console.log("userId: ", userId);
+  // console.log(user);
+
+  // User.findByIdAndUpdate(
+  //   res.locals.currentUserId,
+  //   {$pull: userEvents},
+  //   {safe: true, upsert: true},
+  //   function(err, model) {
+  //       console.log(err);
+  //   }
+  // );
+  // console.log("user", user);
+  // console.log("id", id);
+
+
+  Event.findByIdAndRemove(eventId, (err, removedEvent) => {
+    console.log("err", err);
+    if (err){ return next(err); }
+    console.log("removedEvent: ", removedEvent);
+    User.findByIdAndUpdate(
+      { "_id": ObjectID(userId) },
+      { $pull: { "userEvents": ObjectID(eventId) } },
+      { safe: true },
+      function(err, user) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log("my user: ", user);
+          res.redirect('/events/');
+        }
+
+      }
+    );
+  });
+
+
+
+  // User.findByIdAndUpdate(
+  //   res.locals.currentUserId,
+  //   {$pull: {'userEvents': {_id: req.params.eventId}}},
+  //   function(err, model) {
+  //     if(err){
+  //          console.log(err);
+  //          return res.send(err);
+  //       }
+  //       return res.redirect('/events/');
+  //   }
+  // );
+
+
+  //
+  // User.findByIdAndUpdate(user, (err, userObject) => {
+  //   if (err){ return next(err); }
+  //   userObject.userEvents.pull({ _id: id});
+  //   console.log("what is this: " + userObject);
+  // });
+
+});
+
+// ------------------------------------------------------------------------------
+// EDIT EVENTS
+// ------------------------------------------------------------------------------
+router.get('/:eventId/edit', (req, res, next) => {
+  var eventIdParam = req.params.eventId;
+
+  Event.findById(eventIdParam, (err, eventObject2) => {
+    console.log("here");
+    if (err) { return next(err); }
+    res.render('edit', {eventObject2});
+  });
+
+});
+
+router.post('/:eventId', (req, res, next) => {
+  var eventIdParam = req.params.eventId;
+
+      let updates = {
+          name: req.body.name,
+          description: req.body.description,
+          date: req.body.date
+      };
+
+      Event.findByIdAndUpdate(eventIdParam, updates, (err, eventObject2) => {
+        console.log("found");
+        if (err){ next(err); }
+         return res.redirect(`/events/${eventIdParam}`);
+      });
+});
+
+
 
 // ------------------------------------------------------------------------------
 // EXPORT

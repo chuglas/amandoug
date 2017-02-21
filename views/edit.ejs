@@ -1,0 +1,18 @@
+<h1>Edit event</h1>
+<form action="/events/<%= eventObject2._id %>" method="POST">
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" placeholder="<%= eventObject2.name %>">
+<br><br>
+<label for="description">Description</label>
+<textarea type="text" name="description" placeholder="<%= eventObject2.description %>"></textarea>
+<br><br>
+  <label for="date">Date</label>
+  <input type="date" name="date" id="date" placeholder="<%= eventObject2.date %>">
+<br><br>
+
+<button type="submit">Update Event</button>
+</form>
+
+<form action="/events/<%= eventObject2._id %>/delete" method="POST">
+    <button type="submit">Delete Product</button>
+</form>

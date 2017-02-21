@@ -14,7 +14,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password Required']
   },
-  userEvents: [],
+  userEvents: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });

@@ -85,18 +85,4 @@ authController.post('/login', function(req, res, next) {
 //     passReqToCallback: true
 //   }));
 
-
-
-
-
-
-
-
-authController.get("/:username", ensureLogin.ensureLoggedIn(), (req, res) => {
-  res.render("auth/profile", { user: req.user });
-  // console.log(req.user);
-});
-
-
-
 module.exports = authController;
