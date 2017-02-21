@@ -105,11 +105,7 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
   //     res.redirect(`/events/${eventIdParam}`);
   // });
 
-<<<<<<< HEAD
-  newPic.save((err) => {
-      // res.redirect(`/events/${eventIdParam}`);
-  });
-=======
+
   Event.findById(eventIdParam, (err, event)=>{
     console.log("event", event)
     const newPic = new Photo(pic);
@@ -123,7 +119,7 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
       })
     });
   })
->>>>>>> master
+
 
   // Event.findByIdAndUpdate(
   //   eventIdParam,
