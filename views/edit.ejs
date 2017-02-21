@@ -1,13 +1,13 @@
 <h1>Edit event</h1>
 <form action="/events/<%= eventObject2._id %>" method="POST">
   <label for="name">Name</label>
-  <input type="text" id="name" name="name" placeholder="<%= eventObject2.name %>">
+  <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
 <br><br>
 <label for="description">Description</label>
-<textarea type="text" name="description" placeholder="<%= eventObject2.description %>"></textarea>
+<input type="text" name="description" value="<%= eventObject2.description %>"></input>
 <br><br>
   <label for="date">Date</label>
-  <input type="date" name="date" id="date" placeholder="<%= eventObject2.date %>">
+  <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
 <br><br>
 
 <button type="submit">Update Event</button>
