@@ -21,7 +21,7 @@ mongoose.connect("mongodb://localhost/amandoug-database");
 
 // routes
 
-var index = require('./routes/index');
+
 var users = require('./routes/users');
 const authController = require("./routes/authController");
 const events = require("./routes/events");
@@ -96,10 +96,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', index);
-app.use('/users', users);
 app.use('/', authController);
-app.use('/', events);
+app.use('/', users);
+app.use('/events', events);
+
+
 
 
 // catch 404 and forward to error handler

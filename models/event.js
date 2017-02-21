@@ -3,7 +3,7 @@ const Schema   = mongoose.Schema;
 const User          = require("./user");
 
 const eventSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  user: { type: Number, ref: 'User' },
   name: {
     type: String,
     required: [true, 'Name Required']
@@ -15,7 +15,7 @@ const eventSchema = new Schema({
     type: Date,
     required: [true, 'Date Required']
   },
-  eventPhotos: []
+  eventPhotos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }]
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
