@@ -1,14 +1,16 @@
-<h1>Profile page</h1>
+<%- include('../partials/header') %>
+
 <h1><%= user.username %></h1>
-<ul>
-  <% user.userEvents.forEach((oneEvent) => { %>
-    <li>
-      <h3> <a href='/events/<%= oneEvent._id %>'><%= oneEvent.name %> </a></h3>
-    </li>
-  <% }) %>
-</ul>
-<% if (user) { %>
-  <div>
-    <a href="/">Index</a>
-  </div>
-<% } %>
+
+<% user.userEvents.forEach((oneEvent) => { %>
+  <a class="event-box" href='/events/<%= oneEvent._id %>'>
+    <h3><%= oneEvent.name %></h3>
+    <p><%= oneEvent.description %></p>
+    <%= oneEvent.eventPhotos %>
+  </a>
+<% }) %>
+
+
+<div>
+  <a href="/new-event">Add New Event</a>
+</div>

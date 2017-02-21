@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render('new-event');
-})
+});
 
 router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const eventInfo = {
@@ -40,7 +40,7 @@ router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   );
 
   res.redirect(`/events/${newEvent.id}`);
-  })
+});
 });
 
 // ------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ router.get('/events/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) =>
 
   Event.findById(eventId, (err, eventObject) => {
     if (err) { return next(err); }
-    console.log("event object: " + eventObject)
+    console.log("event object: " + eventObject);
     res.render('event', { eventObject });
   });
 
@@ -78,7 +78,7 @@ router.post('/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.sing
   const newPic = new Photo(pic);
 
   newPic.save((err) => {
-      res.redirect(`/events/${eventIdParam}`);
+      // res.redirect(`/events/${eventIdParam}`);
   });
 
   Event.findByIdAndUpdate(
@@ -89,6 +89,8 @@ router.post('/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.sing
         console.log(err);
     }
   );
+
+  res.redirect(`/events/${eventIdParam}`);
 
 });
 

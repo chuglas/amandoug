@@ -10,6 +10,10 @@ const User           = require("../models/user");
 const bcrypt         = require("bcrypt");
 const bcryptSalt     = 10;
 
+router.get('/', function(req, res, next) {
+  res.render('index', { user: req.user });
+});
+
 authController.get("/signup", (req, res, next) => {
   res.render("auth/signup");
 });
@@ -72,7 +76,7 @@ authController.post('/login', function(req, res, next) {
 //
 
 
-
+// OLD AUTH CONTROLLER LOGIN ROUTE - DOESN'T AUTO LOGIN ON SIGNUP
 // authController.post("/login",
 //   passport.authenticate("local", {
 //     successRedirect: "/",
