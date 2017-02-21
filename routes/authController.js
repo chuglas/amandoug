@@ -10,7 +10,7 @@ const User           = require("../models/user");
 const bcrypt         = require("bcrypt");
 const bcryptSalt     = 10;
 
-router.get('/', function(req, res, next) {
+authController.get('/', function(req, res, next) {
   res.render('index', { user: req.user });
 });
 
