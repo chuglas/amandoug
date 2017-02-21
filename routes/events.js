@@ -93,6 +93,38 @@ router.post('/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.sing
 });
 
 // ------------------------------------------------------------------------------
+// EDIT EVENTS
+// ------------------------------------------------------------------------------
+router.get('/events/:eventId/edit', (req, res, next) => {
+  var eventIdParam = req.params.eventId;
+
+  Event.findById(eventIdParam, (err, eventObject2) => {
+    console.log("here");
+    if (err) { return next(err); }
+    res.render('edit', {eventObject2});
+  });
+
+});
+
+router.post('/events/:eventId', (req, res, next) => {
+  var eventIdParam = req.params.eventId;
+
+      let updates = {
+          name: req.body.name,
+          description: req.body.description,
+          date: req.body.date
+      };
+
+      Event.findByIdAndUpdate(eventIdParam, updates, (err, eventObject2) => {
+        console.log("found");
+        if (err){ next(err); }
+         return res.redirect(`/events/${eventIdParam}`);
+      });
+});
+
+
+
+// ------------------------------------------------------------------------------
 // EXPORT
 // ------------------------------------------------------------------------------
 module.exports = router;

@@ -98,8 +98,9 @@ app.use((req, res, next) => {
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/', authController);
 app.use('/', events);
+app.use('/', authController);
+
 
 
 // catch 404 and forward to error handler
