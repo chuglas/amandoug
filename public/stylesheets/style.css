@@ -1,3 +1,12 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
 body {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -35,6 +44,7 @@ form {
   position: relative;
   box-sizing: border-box;
   display: flex;
+  margin-bottom: 50px;
 }
 
 .text-center {
@@ -114,6 +124,7 @@ a.auth-link {
   background: white;
   color: #512500;
   margin-bottom: 10px;
+  font-family: 'Abel';
 }
 
 .homepage-logo {
@@ -150,7 +161,52 @@ a.auth-link {
   display: block;
 }
 
+.image-preview-wrapper {
+  width: 34%;
+}
 
+#image-preview {
+  clip-path: url(#svgPath);
+}
+
+/*INPUT HIDING*/
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+  width: 100%;
+  display: inline-block;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  background: #afbe8f;
+  color: #512500;
+  margin-bottom: 10px;
+  text-align: center;
+  transition: 300ms;
+}
+
+input.save-new-photo {
+  background: #afbe8f;
+  transition: 300ms;
+}
+
+.custom-file-upload:hover,
+input.save-new-photo:hover {
+  background: #7c8570
+}
+
+.photo-wrapper {
+  padding: 10px;
+  background: white;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.photo-wrapper img {
+  margin: 0 auto;
+}
 
 /*PHOTO UPLOADS*/
 

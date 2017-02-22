@@ -24,7 +24,7 @@ router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   };
 
   User.findById(res.locals.currentUserId, (err, user)=>{
-    console.log("user", user)
+    console.log("user", user);
     let event = new Event(eventInfo);
     console.log("event", event);
     user.userEvents.push(event);
@@ -37,21 +37,6 @@ router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
       })
     });
   })
-  // newEvent.save((err, event) => {
-  //   if (err) { next(err) }
-  //   User.findByIdAndUpdate(
-  //     res.locals.currentUserId,
-  //     {$push: {userEvents: ObjectID(event._id)}},
-  //     {safe: true, upsert: true},
-  //     function(err, model) {
-  //       if (err) {
-  //         next(err)
-  //       } else {
-  //         res.redirect(`/events/${event._id}`);
-  //       }
-  //     }
-  //   );
-  // })
 });
 
 // ------------------------------------------------------------------------------
@@ -69,11 +54,24 @@ router.get('/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
       res.render('event', { eventObject });
       // res.send('da')
     })
-  // Event.findById(eventId, (err, eventObject) => {
-  //   if (err) { return next(err); }
-  //   console.log("event object: " + eventObject)
-  //   res.render('event', { eventObject });
-  // });
+})
+
+// ------------------------------------------------------------------------------
+// RENDERING PUBLIC EVENT PAGE
+// ------------------------------------------------------------------------------
+
+router.get('/:eventId/public', (req, res, next) => {
+  var eventId = req.params.eventId;
+  Event.findOne({_id: eventId })
+    .populate('eventPhotos')
+
+    .exec((err, eventObject)=>{
+      if(err) { next(err)}
+
+            console.log('eventObject', eventObject);
+            res.render('eventPublic', { eventObject });
+
+    })
 
 
 })
@@ -81,8 +79,6 @@ router.get('/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
 // ------------------------------------------------------------------------------
 // UPLOADING PHOTOS
 // ------------------------------------------------------------------------------
-
-
 
 router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res, next){
 
@@ -94,23 +90,13 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
     url_path: `/uploads/${req.file.filename}`,
   };
 
-  // Event.findById(eventIdParam, (err, event)=>{
-  //   if (err) { next(err)}
-  //
-  //   event.eventPhotos.push()
-  // })
-  // const newPic = new Photo(pic);
-  //
-  // newPic.save((err) => {
-  //     res.redirect(`/events/${eventIdParam}`);
-  // });
-
   Event.findById(eventIdParam, (err, event)=>{
     console.log("event", event)
     const newPic = new Photo(pic);
     console.log("newPic", newPic);
     event.eventPhotos.push(newPic);
     event.save((err)=>{
+      if (err) { next(err) };
       newPic.save((err, picSaved)=>{
         console.log("picSaved", picSaved);
         if (err) { next(err) }
@@ -118,16 +104,6 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
       })
     });
   })
-
-  // Event.findByIdAndUpdate(
-  //   eventIdParam,
-  //   {$push: {eventPhotos: newPic}},
-  //   {safe: true, upsert: true},
-  //   function(err, model) {
-  //       console.log(err);
-  //   }
-  // );
-
 });
 
 // ------------------------------------------------------------------------------
@@ -137,21 +113,8 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
 router.post('/:eventId/delete', (req, res, next) => {
   var eventId = req.params.eventId;
   var userId = res.locals.currentUserId;
-  console.log("eventId: ", eventId);
-  console.log("userId: ", userId);
-  // console.log(user);
-
-  // User.findByIdAndUpdate(
-  //   res.locals.currentUserId,
-  //   {$pull: userEvents},
-  //   {safe: true, upsert: true},
-  //   function(err, model) {
-  //       console.log(err);
-  //   }
-  // );
-  // console.log("user", user);
-  // console.log("id", id);
-
+  // console.log("eventId: ", eventId);
+  // console.log("userId: ", userId);
 
   Event.findByIdAndRemove(eventId, (err, removedEvent) => {
     console.log("err", err);
@@ -165,36 +128,13 @@ router.post('/:eventId/delete', (req, res, next) => {
         if(err) {
           console.log(err);
         } else {
-          console.log("my user: ", user);
+          // console.log("my user: ", user);
           res.redirect('/events/');
         }
 
       }
     );
   });
-
-
-
-  // User.findByIdAndUpdate(
-  //   res.locals.currentUserId,
-  //   {$pull: {'userEvents': {_id: req.params.eventId}}},
-  //   function(err, model) {
-  //     if(err){
-  //          console.log(err);
-  //          return res.send(err);
-  //       }
-  //       return res.redirect('/events/');
-  //   }
-  // );
-
-
-  //
-  // User.findByIdAndUpdate(user, (err, userObject) => {
-  //   if (err){ return next(err); }
-  //   userObject.userEvents.pull({ _id: id});
-  //   console.log("what is this: " + userObject);
-  // });
-
 });
 
 // ------------------------------------------------------------------------------
