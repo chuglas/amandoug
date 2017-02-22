@@ -13,7 +13,7 @@ const ObjectID = require('mongodb').ObjectID;
 
 router.get('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render('new-event');
-});
+})
 
 router.post('/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const eventInfo = {
@@ -75,6 +75,7 @@ router.get('/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   //   res.render('event', { eventObject });
   // });
 
+
 })
 
 // ------------------------------------------------------------------------------
@@ -105,7 +106,6 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
   //     res.redirect(`/events/${eventIdParam}`);
   // });
 
-
   Event.findById(eventIdParam, (err, event)=>{
     console.log("event", event)
     const newPic = new Photo(pic);
@@ -120,7 +120,6 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
     });
   })
 
-
   // Event.findByIdAndUpdate(
   //   eventIdParam,
   //   {$push: {eventPhotos: newPic}},
@@ -129,8 +128,6 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
   //       console.log(err);
   //   }
   // );
-
-  res.redirect(`/events/${eventIdParam}`);
 
 });
 
