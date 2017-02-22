@@ -47,7 +47,17 @@ authController.post("/signup", (req, res, next) => {
       if (err) {
         res.render("auth/signup", { message: "The username already exists" });
       } else {
-        res.redirect("/login");
+        // res.redirect("/login");
+
+          passport.authenticate('local', function(err, user, info) {
+            if (err) { return next(err); }
+            if (!user) { return res.redirect('/login'); }
+            req.logIn(user, function(err) {
+              if (err) { return next(err); }
+              return res.redirect('/' + user.username);
+            });
+          })(req, res, next);
+
       }
     });
   });
@@ -55,7 +65,7 @@ authController.post("/signup", (req, res, next) => {
 
 authController.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 authController.get("/login", (req, res, next) => {
