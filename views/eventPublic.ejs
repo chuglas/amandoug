@@ -1,0 +1,10 @@
+<h1> <%= eventObject.name %> </h1>
+<h5> <%= eventObject.description %> </h5>
+
+
+<% eventObject.eventPhotos.forEach((onePhoto) => { %>
+  <img src="<%= onePhoto.url_path %>" />
+  <div class="photo-caption">
+    <p><%= onePhoto.description %></p>
+  </div>
+<% }) %>

@@ -7,17 +7,23 @@ const ensureLogin    = require("connect-ensure-login");
 /* GET users listing. */
 router.get("/:username", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
-  User.findOne({username: req.user.username })
-    .populate('userEvents')
-    .exec((err, user)=>{
-      if (err) { next(err) }
-      console.log("user", user.userEvents[0].eventPhotos);
-      res.render("auth/profile", { user: user });
-    })
+  if (req.user.username === req.params.username) {
 
-
-
-
+    User.findOne({username: req.user.username })
+        .populate('userEvents')
+        .exec((err, user)=>{
+          if (err) { next(err) }
+          res.render("auth/profile", { user: user });
+        })
+  }
+  else {
+    User.findOne({username: req.params.username })
+        .populate('userEvents')
+        .exec((err, user2)=>{
+          if (err) { next(err) }
+          res.render("auth/profilePublic", { user: user2 });
+        })
+    }
   // console.log(req.user);
 });
 
