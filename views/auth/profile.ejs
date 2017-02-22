@@ -1,6 +1,7 @@
 <%- include('../partials/header') %>
 
 <h1><%= user.username %></h1>
+<%= user.img %>
 
 <% user.userEvents.forEach((oneEvent) => { %>
   <a class="event-box" href='/events/<%= oneEvent._id %>'>

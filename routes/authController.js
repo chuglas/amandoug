@@ -2,6 +2,8 @@ const express        = require("express");
 const authController = express.Router();
 const passport       = require("passport");
 const ensureLogin    = require("connect-ensure-login");
+const multer  = require('multer');
+const upload = multer({ dest: './public/uploads/' });
 
 // User model
 const User           = require("../models/user");
@@ -22,6 +24,7 @@ authController.post("/signup", (req, res, next) => {
   var username = req.body.username;
   var password = req.body.password;
   var email    = req.body.email;
+  var img      = req.body.img;
 
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
