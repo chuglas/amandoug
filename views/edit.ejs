@@ -1,5 +1,5 @@
 <h1>Edit event</h1>
-<form action="/events/<%= eventObject2._id %>" method="POST">
+<form action="/<%=userParam%>/events/<%= eventObject2._id %>" method="POST">
   <label for="name">Name</label>
   <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
 <br><br>
@@ -13,6 +13,6 @@
 <button type="submit">Update Event</button>
 </form>
 
-<form action="/events/<%= eventObject2._id %>/delete" method="POST">
-    <button type="submit">Delete Product</button>
+<form action="/<%=userParam%>/events/<%= eventObject2._id %>/delete" method="POST">
+    <button type="submit">Delete Event</button>
 </form>

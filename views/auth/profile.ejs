@@ -4,7 +4,7 @@
 <%= user.img %>
 
 <% user.userEvents.forEach((oneEvent) => { %>
-  <a class="event-box" href='/events/<%= oneEvent._id %>'>
+  <a class="event-box" href='<%= user.username %>/events/<%= oneEvent._id %>'>
     <h3><%= oneEvent.name %></h3>
     <p><%= oneEvent.description %></p>
   </a>
@@ -12,5 +12,5 @@
 
 
 <div>
-  <a href="/events/new-event">Add New Event</a>
+  <a href="/<%= user.username %>/events/new-event">Add New Event</a>
 </div>

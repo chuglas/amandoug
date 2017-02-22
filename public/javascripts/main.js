@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+
+
   function readURL(input) {
       if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -15,3 +17,7 @@ $( document ).ready(function() {
       readURL(this);
   });
 });
+
+(function(){
+    new Clipboard('#copy-button');
+})();

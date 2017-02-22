@@ -1,5 +1,5 @@
 <h1>Edit photo</h1>
-<form action="/events/<%=eventIdParam%>/<%=photoObject.id%>/update" method="POST">
+<form action="/<%=userParam%>/events/<%=eventIdParam%>/<%=photoObject.id%>/update" method="POST">
 
 <label for="description">Description</label>
 <input type="text" name="description" value="<%= photoObject.description %>"></input>
@@ -8,6 +8,6 @@
 <button type="submit">Update Caption</button>
 </form>
 
-<form action="/events/<%=eventIdParam%>/<%= photoObject._id %>/delete" method="POST">
+<form action="/<%=userParam%>/events/<%=eventIdParam%>/<%= photoObject._id %>/delete" method="POST">
     <button type="submit">Delete Photo</button>
 </form>
