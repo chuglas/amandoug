@@ -99,8 +99,8 @@ app.use((req, res, next) => {
 
 app.use('/', authController);
 app.use('/', users);
-app.use('/events', events);
-app.use('/events', photos);
+app.use('/', events);
+app.use('/', photos);
 
 
 
