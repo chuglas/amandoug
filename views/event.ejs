@@ -4,11 +4,11 @@
 <h1> <%= eventObject.name %> </h1>
 <h5> <%= eventObject.description %> </h5>
 
+<a href="/events/<%=eventObject.id%>/edit">Edit event</a>
 
 <section>
   <form action='/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data">
   <div class="upload-wrapper">
-    <input type="text" name="name" placeholder="Photo Name">
     <input type="text" name="description" placeholder="Photo Caption">
     <input type="file" name="file">
     <input type="submit" value="Save New Photo">
@@ -19,9 +19,7 @@
 <% eventObject.eventPhotos.forEach((onePhoto) => { %>
   <img src="<%= onePhoto.url_path %>" />
   <div class="photo-caption">
-    <p><%= onePhoto.name %></p>
     <p><%= onePhoto.description %></p>
+    <a href="/events/<%=eventObject.id%>/<%=onePhoto.id%>/edit">Edit photo</a>
   </div>
 <% }) %>
-
-<a href="/events/<%=eventObject.id%>/edit">Edit event</a>

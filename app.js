@@ -22,9 +22,10 @@ mongoose.connect("mongodb://localhost/amandoug-database");
 // routes
 
 
-var users = require('./routes/users');
+const users = require('./routes/users');
 const authController = require("./routes/authController");
 const events = require("./routes/events");
+const photos = require("./routes/photos");
 
 var app = express();
 
@@ -99,6 +100,7 @@ app.use((req, res, next) => {
 app.use('/', authController);
 app.use('/', users);
 app.use('/events', events);
+app.use('/events', photos);
 
 
 
