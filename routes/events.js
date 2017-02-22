@@ -90,7 +90,6 @@ router.post('/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('fil
 
   const pic = {
     eventId: eventIdParam,
-    name: req.body.name,
     description: req.body.description,
     url_path: `/uploads/${req.file.filename}`,
   };
@@ -227,6 +226,9 @@ router.post('/:eventId', (req, res, next) => {
          return res.redirect(`/events/${eventIdParam}`);
       });
 });
+
+
+
 
 
 

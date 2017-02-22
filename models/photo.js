@@ -4,10 +4,6 @@ const Event     = require("./event");
 
 const photoSchema = new Schema({
   _eventId: { type: Schema.Types.ObjectId, ref: 'Event' },
-  name: {
-    type: String,
-    required: [true, 'Name Required']
-  },
   description: {
     type: String,
   },
