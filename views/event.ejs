@@ -6,10 +6,11 @@
 
 
 <section>
-  <form action='/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" class="dropzone">
+  <form action='/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data">
   <div class="upload-wrapper">
     <input type="text" name="name" placeholder="Photo Name">
     <input type="text" name="description" placeholder="Photo Caption">
+    <input type="file" name="file">
     <input type="submit" value="Save New Photo">
   </div>
   </form>
