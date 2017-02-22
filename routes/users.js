@@ -6,12 +6,12 @@ const ensureLogin    = require("connect-ensure-login");
 
 /* GET users listing. */
 router.get("/:username", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  
+
   User.findOne({username: req.user.username })
     .populate('userEvents')
     .exec((err, user)=>{
       if (err) { next(err) }
-      console.log("user", user);
+      console.log("user", user.userEvents[0].eventPhotos);
       res.render("auth/profile", { user: user });
     })
 

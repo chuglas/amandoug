@@ -1,4 +1,7 @@
+<%- include('partials/header') %>
+
 <h2>New event</h2>
+
 
 <form action="/events/new-event" method="POST" id="form-container">
   <label for="name">Name</label>
@@ -13,6 +16,6 @@
     <div class="error-message"><%= message %></div>
   <% } %>
   <br><br>
-  <button>Create event</button>
+  <button>Create Event</button>
 
 </form>
