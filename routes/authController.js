@@ -24,7 +24,6 @@ authController.post("/signup", (req, res, next) => {
   var username = req.body.username;
   var password = req.body.password;
   var email    = req.body.email;
-  var img      = req.body.img;
 
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });

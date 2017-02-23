@@ -1,11 +1,12 @@
-const express = require('express');
-const multer  = require('multer');
+const express        = require('express');
+const multer         = require('multer');
 const passport       = require("passport");
 const ensureLogin    = require("connect-ensure-login");
-const User = require('../models/user');
-const Event = require('../models/event');
-const Photo = require('../models/photo');
-const upload = multer({ dest: './public/uploads/' });
+const User           = require('../models/user');
+const Event          = require('../models/event');
+const Photo          = require('../models/photo');
+const moment         = require('moment');
+const upload         = multer({ dest: './public/uploads/' });
 
 const router = express.Router();
 

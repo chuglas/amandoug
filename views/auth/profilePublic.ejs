@@ -1,7 +1,7 @@
 <h1><%= user.username %></h1>
 
 <% user.userEvents.forEach((oneEvent) => { %>
-  <a class="event-box" href='/events/<%= oneEvent._id %>/public'>
+  <a class="event-box" href='/<%= user.username%>/events/<%= oneEvent._id %>/public'>
     <h3><%= oneEvent.name %></h3>
     <p><%= oneEvent.description %></p>
   </a>

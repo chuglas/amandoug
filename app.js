@@ -12,7 +12,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const User          = require("./models/user");
 const flash         = require("connect-flash");
 const expressLayouts = require('express-ejs-layouts');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore    = require('connect-mongo')(session);
+const moment        = require('moment');
 
 
 // MONGOOSE CONNECT
