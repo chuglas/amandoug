@@ -5,10 +5,16 @@
 <div class="event-header">
   <div class="event-details">
     <h1> <%= eventObject.name %> </h1>
-    <a href="/<%= userParam %>/events/<%=eventObject.id%>/edit"><div class="btn-edit">Edit Event</div></a>
+
+    <% if( sameUser ) { %>
+      <a href="/<%= userParam %>/events/<%=eventObject.id%>/edit">
+        <div class="btn-edit">Edit Event</div>
+      </a>
+    <% } %>
+
     <div class="width-100">
       <p> <%= eventObject.description %> </p>
-    </div>  
+    </div>
   </div>
 
   <div class="copy-wrapper">
@@ -22,21 +28,23 @@
   </div>
 </div>
 
-<section>
-  <form action='/<%= userParam %>/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" runat="server">
-  <div class="upload-wrapper">
-    <input type="text" name="description" placeholder="Photo Caption">
-    <label class="custom-file-upload">
-      <input type="file" name="file" id="imgInp">
-      Choose A Photo
-    </label>
-    <input class="save-new-photo" type="submit" value="Save New Photo">
-  </div>
-  <div class="image-preview-wrapper">
-    <img id="image-preview" src="/images/camerabw-01.svg" alt="Image Preview" />
-  </div>
-  </form>
-</section>
+<% if( sameUser ) { %>
+  <section>
+    <form action='/<%= userParam %>/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" runat="server">
+    <div class="upload-wrapper">
+      <input type="text" name="description" placeholder="Photo Caption">
+      <label class="custom-file-upload">
+        <input type="file" name="file" id="imgInp">
+        Choose A Photo
+      </label>
+      <input class="save-new-photo" type="submit" value="Save New Photo">
+    </div>
+    <div class="image-preview-wrapper">
+      <img id="image-preview" src="/images/camerabw-01.svg" alt="Image Preview" />
+    </div>
+    </form>
+  </section>
+<% } %>
 
 <% eventObject.eventPhotos.forEach((onePhoto) => { %>
 
@@ -45,8 +53,13 @@
     <div class="photo-caption">
       <p><%= onePhoto.description %></p>
     </div>
-    <a href="/<%=userParam%>/events/<%=eventObject.id%>/<%=onePhoto.id%>/edit"><div class="btn-edit photo-edit">Edit Photo</div></a>
 
+    <% if( sameUser ) { %>
+      <a href="/<%=userParam%>/events/<%=eventObject.id%>/<%=onePhoto.id%>/edit">
+        <div class="btn-edit photo-edit">Edit Photo</div>
+      </a>
+    <% } %>
+    
   </div>
 <% }) %>
 

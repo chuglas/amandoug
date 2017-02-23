@@ -1,20 +1,24 @@
+<%- include('partials/header') %>
 
+<div class="page-margin--top">
 
-<h1>Edit event</h1>
-<form action="/<%=userParam%>/events/<%= eventObject2._id %>" method="POST">
-  <label for="name">Name</label>
-  <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
-<br><br>
-<label for="description">Description</label>
-<input type="text" name="description" value="<%= eventObject2.description %>"></input>
-<br><br>
-  <label for="date">Date</label>
-  <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
-<br><br>
+  <h1>Edit event</h1>
+  <form action="/<%=userParam%>/events/<%= eventObject2._id %>" method="POST">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
+  <br><br>
+  <label for="description">Description</label>
+  <input type="text" name="description" value="<%= eventObject2.description %>"></input>
+  <br><br>
+    <label for="date">Date</label>
+    <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
+  <br><br>
 
-<button type="submit">Update Event</button>
-</form>
+  <button type="submit">Update Event</button>
+  </form>
 
-<form action="/<%=userParam%>/events/<%= eventObject2._id %>/delete" method="POST">
-    <button type="submit">Delete Event</button>
-</form>
+  <form action="/<%=userParam%>/events/<%= eventObject2._id %>/delete" method="POST">
+      <button type="submit">Delete Event</button>
+  </form>
+
+</div>

@@ -169,6 +169,7 @@ a.auth-link {
   height: 150px;
   background: WhiteSmoke;
   display: block;
+  margin-bottom: 30px;
 }
 
 .event-header {
