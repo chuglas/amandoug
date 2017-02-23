@@ -67,7 +67,10 @@ authController.post("/signup", (req, res, next) => {
 
 authController.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  delete res.locals.currentUser;
+  delete res.locals.currentUserId;
+  delete req.session.passport;
+  res.redirect("/login");
 });
 
 authController.get("/login", (req, res, next) => {
