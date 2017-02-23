@@ -8,10 +8,10 @@ const Photo = require('../models/photo');
 const upload = multer({ dest: './public/uploads/' });
 const auth = require('../helpers/auth');
 
-
 const router = express.Router();
 
 const ObjectID = require('mongodb').ObjectID;
+
 
 
 // ------------------------------------------------------------------------------
@@ -22,10 +22,13 @@ router.get('/:username/events/:eventId/:photoId/edit', auth.protectProfile('/log
   var userParam    = req.params.username;
   var photoIdParam = req.params.photoId;
   var eventIdParam = req.params.eventId;
-
+  var userLink = null;
+  if (req.session.passport) {
+     userLink = res.locals.currentUser.username;
+  }
   Photo.findById(photoIdParam, (err, photoObject) => {
     if (err) { return next(err); }
-    res.render('editPhoto', {photoObject, eventIdParam, userParam});
+    res.render('editPhoto', {photoObject, eventIdParam, userParam, userLink});
   });
 });
 

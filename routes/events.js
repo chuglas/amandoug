@@ -9,15 +9,19 @@ const upload = multer({ dest: './public/uploads/' });
 const auth = require('../helpers/auth');
 const moment         = require('moment');
 
-
-
 const router = express.Router();
 
 const ObjectID = require('mongodb').ObjectID;
 
-router.get('/:username/events/new-event', (req, res, next) => {
+
+
+router.get('/:username/events/new-event', auth.protectProfile('/login'), (req, res, next) => {
   var userParam = req.params.username;
-  res.render('new-event', {userParam});
+  var userLink = null;
+  if (req.session.passport) {
+     userLink = res.locals.currentUser.username;
+  }
+  res.render('new-event', {userParam, userLink});
 });
 
 router.post('/:username/events/new-event', (req, res, next) => {
@@ -48,13 +52,17 @@ router.get('/:username/events/:eventId', (req, res, next) => {
   var eventId = req.params.eventId;
   var userParam = req.params.username;
 
+
   Event.findOne({_id: eventId })
     .populate('eventPhotos')
     .exec((err, eventObject)=>{
       if(err) { next(err);}
       let sameUser = (res.locals.isUserLoggedIn && res.locals.currentUser.username === userParam ) ? true : false;
-      console.log(sameUser);
-      res.render('event', { eventObject, userParam, sameUser });
+      var userLink = null;
+      if (req.session.passport) {
+         userLink = res.locals.currentUser.username;
+      }
+      res.render('event', { eventObject, userParam, sameUser, userLink});
     });
 });
 
@@ -90,7 +98,7 @@ router.post('/:username/events/:eventId/upload', upload.single('file'), function
 // DELETE
 // ------------------------------------------------------------------------------
 //
-router.post('/:username/events/:eventId/delete', (req, res, next) => {
+router.post('/:username/events/:eventId/delete', auth.protectProfile('/login'), (req, res, next) => {
   var eventId = req.params.eventId;
   var userId = res.locals.currentUserId;
   var userParam = req.params.username;
@@ -120,10 +128,14 @@ router.post('/:username/events/:eventId/delete', (req, res, next) => {
 router.get('/:username/events/:eventId/edit', auth.protectProfile('/login'), (req, res, next) => {
   var eventIdParam = req.params.eventId;
   var userParam = req.params.username;
+  var userLink = null;
+  if (req.session.passport) {
+     userLink = res.locals.currentUser.username;
+  }
 
   Event.findById(eventIdParam, (err, eventObject2) => {
     if (err) { return next(err); }
-    res.render('edit', {eventObject2, userParam});
+    res.render('edit', {eventObject2, userParam, userLink});
   });
 });
 

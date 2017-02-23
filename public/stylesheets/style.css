@@ -164,6 +164,16 @@ a.auth-link {
   text-transform: uppercase;
   padding: 10px;
 }
+
+.header p {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  float: left;
+  margin-right: auto;
+  margin-left: 15px;
+}
+
 .event-box {
   width: 100%;
   height: 150px;
