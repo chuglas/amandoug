@@ -13,9 +13,13 @@ const MongoStore = require('connect-mongo')(session);
 const auth = require('./helpers/auth');
 const moment        = require('moment');
 
+require("dotenv").config();
+
+
 
 // MONGOOSE CONNECT
-mongoose.connect("mongodb://localhost/amandoug-database");
+// mongoose.connect("mongodb://localhost/amandoug-database");
+mongoose.connect(process.env.MONGODB_URI);
 
 
 // routes
