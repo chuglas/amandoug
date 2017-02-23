@@ -14,6 +14,7 @@ router.get("/:username", (req, res, next) => {
     .populate('userEvents')
     .exec((err, user)=>{
       if (err) { next(err); }
+      if (!user) { res.redirect('/signup'); }
       let sameUser = (res.locals.isUserLoggedIn && res.locals.currentUser.username === userParam ) ? true : false;
       var userLink = null;
       if (req.session.passport) {
