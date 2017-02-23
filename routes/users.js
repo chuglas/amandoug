@@ -7,13 +7,15 @@ const ensureLogin    = require("connect-ensure-login");
 /* GET users listing. */
 router.get("/:username", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
+  var userParam = req.params.username;
+
   if (req.user.username === req.params.username) {
 
     User.findOne({username: req.user.username })
         .populate('userEvents')
         .exec((err, user)=>{
           if (err) { next(err) }
-          res.render("auth/profile", { user: user });
+          res.render("auth/profile", { user: user, userParam });
         })
   }
   else {
