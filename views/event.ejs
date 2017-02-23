@@ -18,7 +18,9 @@
 
     <div class="width-100">
       <p> <%= eventObject.description %> </p>
-      <p> <%= eventObject.date%></p>
+      <% if (eventObject.date !== null) {%>
+        <p> <%= eventObject.date.toDateString()%></p>
+      <% }%>
     </div>
   </div>
 
@@ -27,7 +29,7 @@
       <h3>SHARE THIS ALBUM</h3>
     </div>
     <div class="clipboard-wrapper width-100">
-      <input class="copy-link" id="post-shortlink" value="localhost:3000/events/<%=eventObject.id%>/public">
+      <input class="copy-link" id="post-shortlink" value="amandoug.herokuapp.com/<%= userLink%>/events/<%= eventObject.id%>">
       <button class="button copy-button" id="copy-button" data-clipboard-target="#post-shortlink">COPY LINK</button>
     </div>
   </div>

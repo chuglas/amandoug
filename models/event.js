@@ -15,7 +15,6 @@ const eventSchema = new Schema({
   },
   date: {
     type: Date,
-    required: [true, 'Date Required']
   },
   eventPhotos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
   }, {
