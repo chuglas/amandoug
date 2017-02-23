@@ -59,7 +59,7 @@ router.get('/:username/events/:eventId', (req, res, next) => {
 // UPLOADING PHOTOS
 // ------------------------------------------------------------------------------
 
-router.post('/:username/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res, next){
+router.post('/:username/events/:eventId/upload', upload.single('file'), function(req, res, next){
 
   var eventIdParam = req.params.eventId;
   var userParam    = req.params.username;
