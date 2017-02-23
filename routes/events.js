@@ -6,17 +6,18 @@ const User = require('../models/user');
 const Event = require('../models/event');
 const Photo = require('../models/photo');
 const upload = multer({ dest: './public/uploads/' });
+const auth = require('../helpers/auth');
 
 const router = express.Router();
 
 const ObjectID = require('mongodb').ObjectID;
 
-router.get('/:username/events/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+router.get('/:username/events/new-event', (req, res, next) => {
   var userParam = req.params.username;
   res.render('new-event', {userParam});
-})
+});
 
-router.post('/:username/events/new-event', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+router.post('/:username/events/new-event', (req, res, next) => {
   const eventInfo = {
     name: req.body.name,
     _user: res.locals.currentUserId,
@@ -25,71 +26,43 @@ router.post('/:username/events/new-event', ensureLogin.ensureLoggedIn(), (req, r
   };
 
   User.findById(res.locals.currentUserId, (err, user)=>{
-    console.log("user", user);
     let event = new Event(eventInfo);
-    console.log("event", event);
     user.userEvents.push(event);
-    console.log("userEvents:", user.userEvents)
     user.save((err)=>{
       event.save((err, eventSaved)=>{
-        console.log("eventSaved", eventSaved);
-        if (err) { next(err) }
+        if (err) { next(err); }
         res.redirect(`/${user.username}/events/${eventSaved._id}`);
-      })
+      });
     });
-  })
+  });
 });
 
 // ------------------------------------------------------------------------------
 // RENDERING EVENT PAGE
 // ------------------------------------------------------------------------------
 
-router.get('/:username/events/:eventId', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+router.get('/:username/events/:eventId', (req, res, next) => {
   var eventId = req.params.eventId;
   var userParam = req.params.username;
 
   Event.findOne({_id: eventId })
     .populate('eventPhotos')
-
     .exec((err, eventObject)=>{
-      if(err) { next(err)}
-      console.log('eventObject', eventObject);
-      res.render('event', { eventObject, userParam });
-      // res.send('da')
-    })
-})
-
-// ------------------------------------------------------------------------------
-// RENDERING PUBLIC EVENT PAGE
-// ------------------------------------------------------------------------------
-
-router.get('/:username/events/:eventId/public', (req, res, next) => {
-  var eventId = req.params.eventId;
-  var userParam = req.params.username;
-
-  Event.findOne({_id: eventId })
-    .populate('eventPhotos')
-
-    .exec((err, eventObject)=>{
-      if(err) { next(err)}
-
-            console.log('eventObject', eventObject);
-            res.render('eventPublic', { eventObject, userParam });
-
-    })
-
-
-})
+      if(err) { next(err);}
+      let sameUser = (res.locals.isUserLoggedIn && res.locals.currentUser.username === userParam ) ? true : false;
+      console.log(sameUser);
+      res.render('event', { eventObject, userParam, sameUser });
+    });
+});
 
 // ------------------------------------------------------------------------------
 // UPLOADING PHOTOS
 // ------------------------------------------------------------------------------
 
-router.post('/:username/events/:eventId/upload', ensureLogin.ensureLoggedIn(), upload.single('file'), function(req, res, next){
+router.post('/:username/events/:eventId/upload', upload.single('file'), function(req, res, next){
 
   var eventIdParam = req.params.eventId;
   var userParam    = req.params.username;
-
 
   const pic = {
     eventId: eventIdParam,
@@ -98,19 +71,16 @@ router.post('/:username/events/:eventId/upload', ensureLogin.ensureLoggedIn(), u
   };
 
   Event.findById(eventIdParam, (err, event)=>{
-    console.log("event", event)
     const newPic = new Photo(pic);
-    console.log("newPic", newPic);
     event.eventPhotos.push(newPic);
     event.save((err)=>{
-      if (err) { next(err) };
+      if (err) { next(err); }
       newPic.save((err, picSaved)=>{
-        console.log("picSaved", picSaved);
-        if (err) { next(err) }
+        if (err) { next(err); }
         res.redirect(`/${userParam}/events/${eventIdParam}`);
-      })
+      });
     });
-  })
+  });
 });
 
 // ------------------------------------------------------------------------------
@@ -121,13 +91,10 @@ router.post('/:username/events/:eventId/delete', (req, res, next) => {
   var eventId = req.params.eventId;
   var userId = res.locals.currentUserId;
   var userParam = req.params.username;
-  // console.log("eventId: ", eventId);
-  // console.log("userId: ", userId);
 
   Event.findByIdAndRemove(eventId, (err, removedEvent) => {
     console.log("err", err);
     if (err){ return next(err); }
-    console.log("removedEvent: ", removedEvent);
     User.findByIdAndUpdate(
       { "_id": ObjectID(userId) },
       { $pull: { "userEvents": ObjectID(eventId) } },
@@ -136,7 +103,6 @@ router.post('/:username/events/:eventId/delete', (req, res, next) => {
         if(err) {
           console.log(err);
         } else {
-          // console.log("my user: ", user);
           res.redirect(`/${userParam}/`);
         }
 
@@ -148,16 +114,14 @@ router.post('/:username/events/:eventId/delete', (req, res, next) => {
 // ------------------------------------------------------------------------------
 // EDIT EVENTS
 // ------------------------------------------------------------------------------
-router.get('/:username/events/:eventId/edit', (req, res, next) => {
+router.get('/:username/events/:eventId/edit', auth.protectProfile('/login'), (req, res, next) => {
   var eventIdParam = req.params.eventId;
   var userParam = req.params.username;
 
   Event.findById(eventIdParam, (err, eventObject2) => {
-    console.log("here");
     if (err) { return next(err); }
     res.render('edit', {eventObject2, userParam});
   });
-
 });
 
 router.post('/:username/events/:eventId', (req, res, next) => {
@@ -171,16 +135,10 @@ router.post('/:username/events/:eventId', (req, res, next) => {
       };
 
       Event.findByIdAndUpdate(eventIdParam, updates, (err, eventObject2) => {
-        console.log("found");
         if (err){ next(err); }
          return res.redirect(`/${userParam}/events/${eventIdParam}`);
       });
 });
-
-
-
-
-
 
 // ------------------------------------------------------------------------------
 // EXPORT

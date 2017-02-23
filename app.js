@@ -6,14 +6,11 @@ var cookieParser    = require('cookie-parser');
 var bodyParser      = require('body-parser');
 const mongoose      = require("mongoose");
 const session       = require("express-session");
-const bcrypt        = require("bcrypt");
-const passport      = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
 const User          = require("./models/user");
 const flash         = require("connect-flash");
 const expressLayouts = require('express-ejs-layouts');
 const MongoStore = require('connect-mongo')(session);
-
+const auth = require('./helpers/auth');
 
 // MONGOOSE CONNECT
 mongoose.connect("mongodb://localhost/amandoug-database");
@@ -51,51 +48,20 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
+app.use(flash());
+const passport = require('./helpers/passport')
 app.use(passport.initialize());
 app.use(passport.session());
 
-// PASSPORT METHODS
-passport.serializeUser((user, cb) => {
-  cb(null, user.id);
-});
-
-passport.deserializeUser((id, cb) => {
-  User.findOne({ "_id": id }, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
-
-app.use(flash());
-passport.use(new LocalStrategy({
-  passReqToCallback: true
-}, (req, username, password, next) => {
-  User.findOne({ username }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return next(null, false, { message: "Incorrect username" });
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return next(null, false, { message: "Incorrect password" });
-    }
-
-    return next(null, user);
-  });
-}));
+app.use(auth.setCurrentUser);
 
 
-app.use((req, res, next) => {
-  if (req.session.passport) {
-    res.locals.currentUserId = req.session.passport.user;
-    res.locals.isUserLoggedIn = true;
-  } else {
-    res.locals.isUserLoggedIn = false;
-  }
 
-  next();
-});
+
+
+// middlewear that checks if it's logged in - not ensure if it's logged in
+
 
 app.use('/', authController);
 app.use('/', users);
