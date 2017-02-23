@@ -15,7 +15,7 @@ router.get("/:username", (req, res, next) => {
     .exec((err, user)=>{
       if (err) { next(err); }
       let sameUser = (res.locals.isUserLoggedIn && res.locals.currentUser.username === userParam ) ? true : false;
-      var userlink = null;
+      var userLink = null;
       if (req.session.passport) {
          userLink = res.locals.currentUser.username;
       }
