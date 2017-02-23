@@ -1,10 +1,9 @@
-<div class="header">
-    <nav>
-      <a href="/">My Events</a>
+<nav class="header">
       <% if( isUserLoggedIn ) { %>
+        <p><%= userLink %></p>
+        <a href="/<%= userLink %>">My Events</a>
         <a href="/logout">Logout</a>
       <% } else {%>
         <a href="/login">Login</a>
       <% } %>
-    </nav>
-</div>
+</nav>

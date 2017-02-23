@@ -13,6 +13,14 @@
     <div class="error-message"><%= message %></div>
   <% } %>
   <br><br>
+  <section>
+    <label for="picture">Profile picture</label>
+    <form action="/public/upload" method="post" enctype="multipart/form-data">
+      <input type="text" name="name">
+      <input type="file" name="file">
+      <input type="submit" value="Save">
+    </form>
+    <br><br>
   <button>Create account</button>
 
   <p class="account-message">

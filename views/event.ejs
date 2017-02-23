@@ -1,10 +1,14 @@
+
+
 <%- include('partials/header') %>
 
 <div class="page-margin--top">
 
+
 <div class="event-header">
   <div class="event-details">
     <h1> <%= eventObject.name %> </h1>
+
 
     <% if( sameUser ) { %>
       <a href="/<%= userParam %>/events/<%=eventObject.id%>/edit">
@@ -14,6 +18,7 @@
 
     <div class="width-100">
       <p> <%= eventObject.description %> </p>
+      <p> <%= eventObject.date%></p>
     </div>
   </div>
 
@@ -59,7 +64,7 @@
         <div class="btn-edit photo-edit">Edit Photo</div>
       </a>
     <% } %>
-    
+
   </div>
 <% }) %>
 

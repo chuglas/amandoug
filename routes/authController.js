@@ -2,6 +2,8 @@ const express        = require("express");
 const authController = express.Router();
 const passport       = require("passport");
 const ensureLogin    = require("connect-ensure-login");
+const multer  = require('multer');
+const upload = multer({ dest: './public/uploads/' });
 
 // User model
 const User           = require("../models/user");
@@ -47,7 +49,17 @@ authController.post("/signup", (req, res, next) => {
       if (err) {
         res.render("auth/signup", { message: "The username already exists" });
       } else {
-        res.redirect("/login");
+        // res.redirect("/login");
+
+          passport.authenticate('local', function(err, user, info) {
+            if (err) { return next(err); }
+            if (!user) { return res.redirect('/login'); }
+            req.logIn(user, function(err) {
+              if (err) { return next(err); }
+              return res.redirect('/' + user.username);
+            });
+          })(req, res, next);
+
       }
     });
   });

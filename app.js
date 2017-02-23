@@ -11,6 +11,8 @@ const flash         = require("connect-flash");
 const expressLayouts = require('express-ejs-layouts');
 const MongoStore = require('connect-mongo')(session);
 const auth = require('./helpers/auth');
+const moment        = require('moment');
+
 
 // MONGOOSE CONNECT
 mongoose.connect("mongodb://localhost/amandoug-database");

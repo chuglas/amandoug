@@ -4,6 +4,7 @@ const User = require('../models/user');
 const Event = require('../models/event');
 const ensureLogin    = require("connect-ensure-login");
 
+
 /* GET users listing. */
 router.get("/:username", (req, res, next) => {
 
@@ -14,7 +15,11 @@ router.get("/:username", (req, res, next) => {
     .exec((err, user)=>{
       if (err) { next(err); }
       let sameUser = (res.locals.isUserLoggedIn && res.locals.currentUser.username === userParam ) ? true : false;
-      res.render("auth/profile", { user: user, sameUser: sameUser });
+      var userlink = null;
+      if (req.session.passport) {
+         userLink = res.locals.currentUser.username;
+      }
+      res.render("auth/profile", { user: user, sameUser: sameUser, userLink});
   });
 });
 
