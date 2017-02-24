@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongo')(session);
 const auth = require('./helpers/auth');
 const moment        = require('moment');
 
+
 require("dotenv").config();
 
 
@@ -48,6 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
 app.set('layout', 'layouts/main-layout');
 
+
+
 // express session middlewear
 app.use(session({
   secret: "passport-local-strategy",
@@ -56,7 +59,7 @@ app.use(session({
 }));
 
 app.use(flash());
-const passport = require('./helpers/passport')
+const passport = require('./helpers/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 

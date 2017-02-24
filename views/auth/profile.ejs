@@ -2,7 +2,14 @@
 
 
 <div class="page-margin--top">
-  <h1><%= user.username %></h1>
+  <div class="profile-header">
+    <h1><%= user.username %></h1>
+    <% if( sameUser ) { %>
+      <div class="btn-edit">
+        <a href="/<%= user.username %>/events/new-event">Add New Event</a>
+      </div>
+    <% } %>
+  </div>
 
   <% user.userEvents.forEach((oneEvent) => { %>
     <a class="event-box" href='<%= user.username %>/events/<%= oneEvent._id %>'>
@@ -10,10 +17,5 @@
       <p><%= oneEvent.description %></p>
     </a>
   <% }) %>
-  <% if( sameUser ) { %>
-    <div>
-      <a href="/<%= user.username %>/events/new-event">Add New Event</a>
-    </div>
-  <% } %>
 
 </div>

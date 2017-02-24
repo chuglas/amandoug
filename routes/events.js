@@ -24,7 +24,7 @@ router.get('/:username/events/new-event', auth.protectProfile('/login'), (req, r
   res.render('new-event', {userParam, userLink});
 });
 
-router.post('/:username/events/new-event', (req, res, next) => {
+router.post('/:username/events/new-event',  (req, res, next) => {
   const eventInfo = {
     name: req.body.name,
     _user: res.locals.currentUserId,
