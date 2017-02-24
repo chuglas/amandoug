@@ -12,7 +12,7 @@ body {
   box-sizing: border-box;
   font: 16px 'Abel', sans-serif;
   background: WhiteSmoke;
-  color: #514b3a;
+  color: #2F4B26;
   padding: 30px;
 }
 
@@ -40,6 +40,12 @@ h1 {
   text-transform: uppercase;
   line-height: 1;
   margin: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+  line-height 1;
 }
 
 h3 {
@@ -78,25 +84,16 @@ button {
 .homepage-wrapper {
   height: 100vh;
   width: 100vw;
-  background: #dde491;
-  display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../images/cover-photo-2.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
-.homepage-left {
-  display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
-  width: 33%;
-  align-items: center;
-  justify-content: center;
-}
-
-.homepage-right {
-  display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
-  width: 67%;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  text=align: center;
-}
 
 @media screen and (max-width: 768px) {
   .homepage-right {
@@ -107,49 +104,60 @@ button {
   }
 }
 
-.auth-link {
-  height: 150px;
-  width: 150px;
-  font-size: 2rem;
+.home-screen {
+  position: absolute;
+  top: 100px;
+  background: rgba(255,255,255,0.5);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 50px;
+  width: 80%;
+}
+
+@media screen and (max-width: 768px) {
+  .home-screen {
+    width: 90%;
+    top: 30px;
+  }
+}
+
+.home-screen img {
+  width: 25%;
+}
+
+.flex {
+  display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
+  justify-content: center;
+}
+
+.btn-auth {
+  width: 100px;
+  height: 100px;
+  font-size: 1rem;
   text-transform: uppercase;
   font-family: 'Acme';
-  background: #6BA368;
-  color: #657059;
+  background: #3E885B;
+  color: WhiteSmoke;
   display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   z-index: 3;
-  margin: 80px;
+  margin: 30px;
+  border-radius: 50%;
+  transition: 300ms;
 }
 
-a.auth-link {
-  color: #657059;
-}
-
-.auth-link:before, .auth-link:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 150px;
-    width: 150px;
-    background: #6BA368;
-    z-index: -1;
-}
-.auth-link:before {
-  transform: rotate(30deg);
-}
-.auth-link:after {
-  transform: rotate(60deg);
+.btn-auth:hover {
+  background: #2F4B26;
 }
 
 .page-margin--top {
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 .page-margin--top-large {
-  margin-top: 100px;
+  margin-top: 120px;
 }
 
 .upload-section {
@@ -165,20 +173,20 @@ a.auth-link {
   left: 0;
   right: 0;
   width: 100%;
-  height: 50px;
-  background: #514b3a;
+  height: 60px;
+  background: #2F4B26;
   color: white;
   display: flex;
   -ms-align-items: center;
   align-items: center;
 }
 
-.upload-header h2 {
+.upload-header p {
   margin: 0 0 0 20px;
 }
 
 .upload-section form {
-  margin-top: 50px;
+  margin-top: 60px;
   margin-bottom: 0;
 }
 
@@ -215,9 +223,9 @@ a.auth-link {
   left: 0;
   right: 0;
   width: 100%;
-  height: 50px;
+  height: 60px;
   color: #D7FCD4;
-  background: #514b3a;
+  background: #2F4B26;
   font-family: 'Acme';
   display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
   -ms-align-items: center;
@@ -249,21 +257,26 @@ a.auth-link {
 
 .event-box {
   width: 100%;
-  height: 150px;
-  background: #dde491;
+  min-height: 150px;
+  background: #3E885B;
   display: block;
   margin-bottom: 30px;
   padding: 30px;
+  cursor: pointer;
 }
 
 a.event-box {
-  color: #514b3a;
+  color: WhiteSmoke;
 }
 
 .event-header {
   display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: flex;
   margin-bottom: 50px;
   flex-wrap: wrap;
+}
+
+.event-header .btn-edit {
+  margin-left: 0;
 }
 
 .event-details {
@@ -273,6 +286,11 @@ a.event-box {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+}
+
+.event-details p {
+  margin: 0 0 20px 0;
+  opacity: .5;
 }
 
 @media screen and (max-width: 786px) {
@@ -285,7 +303,7 @@ a.event-box {
 .btn-edit {
   height: 40px;
   padding: 10px;
-  background: #6BA368;
+  background: #3E885B;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -297,6 +315,7 @@ a.event-box {
   text-transform: uppercase;
   color: white;
   margin-left: 20px;
+  transition: 300ms;
 }
 
 .btn-edit a {
@@ -310,6 +329,10 @@ a.event-box {
   right: 20px
 }
 
+.btn-edit:hover {
+  background: #2F4B26;
+}
+
 .width-100 {
   width: 100%;
 }
@@ -319,11 +342,11 @@ a.event-box {
   display: flex;
   -ms-align-items: center;
   align-items: center;
-  background: #6BA368;
+  background: #3E885B;
   position: absolute;
-  top: 50px;
+  top: 60px;
   left: 0;
-  height: 50px;
+  height: 60px;
 }
 
 @media screen and (max-width: 786px) {
@@ -333,9 +356,9 @@ a.event-box {
 }
 
 input.copy-link {
-  border: 2px solid #6BA368;
-  background: #6BA368;
-  color: #6BA368;
+  border: 2px solid #3E885B;
+  background: #3E885B;
+  color: #3E885B;
   font-family: 'Abel';
   height: 30px;
   width: 50%;
@@ -345,7 +368,7 @@ input.copy-link {
 }
 
 .copy-button {
-  background: #6BA368;
+  background: #3E885B;
   font-family: 'Abel';
   border: none;
   color: white;
@@ -385,7 +408,7 @@ input[type="file"] {
   padding: 20px;
   font-size: 18px;
   border: none;
-  background: #6BA368;
+  background: #3E885B;
   color: WhiteSmoke;
   margin-bottom: 10px;
   text-align: center;
@@ -395,7 +418,7 @@ input[type="file"] {
 }
 
 input.save-new-photo {
-  background: #6BA368;
+  background: #3E885B;
   transition: 300ms;
   color: WhiteSmoke;
   text-transform: uppercase;
@@ -403,7 +426,8 @@ input.save-new-photo {
 
 .custom-file-upload:hover,
 input.save-new-photo:hover {
-  background: #7c8570
+  background: #2F4B26;
+  cursor: pointer;
 }
 
 .photo-wrapper {
@@ -419,7 +443,7 @@ input.save-new-photo:hover {
 }
 
 .login-page-wrapper {
-  background-image:url('../images/jens-johnsson-121803.jpg');
+  background-image:url('../images/party1.jpg');
   background-size: cover;
   position: absolute;
   top: 0;
@@ -465,7 +489,7 @@ input.save-new-photo:hover {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 50px;
+    top: 60px;
 }
 
 @media screen and (max-width: 768px) {
@@ -496,7 +520,7 @@ form.form-container {
 }
 
 .signup-form-wrapper {
-  background-image:url('../images/sweet-ice-cream-photography-79569.jpg');
+  background-image:url('../images/wedding1.jpg');
   background-size: cover;
   position: absolute;
   top: 0;

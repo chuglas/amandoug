@@ -10,10 +10,9 @@
   <form action="/<%=userParam%>/events/new-event" method="POST" id="form-container">
     <div class="new-event-wrapper">
     <input type="text" name="name" placeholder="Name">
-    <br><br>
     <input type="text" name="description" placeholder="description">
-    <br><br>
     <input type="date" name="date" placeholder="Date">
+
     <% if (typeof(message) != "undefined") { %>
       <div class="error-message"><%= message %></div>
     <% } %>

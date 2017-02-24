@@ -4,7 +4,7 @@
 
 <div class="copy-wrapper">
   <button class="button copy-button" id="copy-button" data-clipboard-target="#post-shortlink">SHARE THIS ALBUM! CLICK HERE TO COPY LINK TO CLIPBOARD</button>
-  <input class="copy-link" id="post-shortlink" value="localhost:3000/events/<%=eventObject.id%>/public">
+  <input class="copy-link" id="post-shortlink" value="https://amandoug.herokuapp.com/<%= userParam %>/events/<%=eventObject.id%>/">
 </div>
 
 <div class="page-margin--top-large">
@@ -13,25 +13,24 @@
     <div class="event-details">
       <h1> <%= eventObject.name %> </h1>
 
-
+      <div class="width-100">
+        <h2> <%= eventObject.description %> </h2>
+        <% if (eventObject.date !== null) {%>
+          <p> <%= eventObject.date.toDateString()%></p>
+        <% }%>
+      </div>
       <% if( sameUser ) { %>
         <a href="/<%= userParam %>/events/<%=eventObject.id%>/edit">
           <div class="btn-edit">Edit Event</div>
         </a>
       <% } %>
-
-      <div class="width-100">
-        <p> <%= eventObject.description %> </p>
-        <% if (eventObject.date !== null) {%>
-          <p> <%= eventObject.date.toDateString()%></p>
-        <% }%>      </div>
     </div>
   </div>
 
   <% if( sameUser ) { %>
     <section class="upload-section">
       <div class="upload-header">
-        <h2>UPLOAD A NEW PHOTO</h2>
+        <p>UPLOAD A NEW PHOTO</p>
       </div>
       <form action='/<%= userParam %>/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" runat="server">
         <div class="upload-wrapper">
