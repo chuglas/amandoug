@@ -417,3 +417,96 @@ input.save-new-photo:hover {
 .photo-wrapper img {
   margin: 0 auto;
 }
+
+.login-page-wrapper {
+  background-image:url('../images/jens-johnsson-121803.jpg');
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/*SIGNUP PAGE*/
+
+.signup-container {
+  width: 80%;
+  text-align: center;
+}
+
+.signup-wrapper{
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+}
+
+.signup-wrapper input{
+  width: 100%;
+  z-index: 1;
+  opacity: 1;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  background: white;
+  color: #512500;
+  /*margin-bottom: 10px;*/
+  font-family: 'Abel';
+  margin-bottom: 10px;
+
+}
+
+.transparent-box {
+    width: 50%;
+    background-color: hsla(130, 0%, 100%, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50px;
+}
+
+@media screen and (max-width: 768px) {
+  .transparent-box {
+    width: 90%;
+  }
+}
+
+form.form-container {
+  width: 100%;
+}
+
+.signup-header {
+  color: grey;
+}
+
+.login-header {
+  color: grey;
+  margin-top: 10%;
+}
+
+.account-message {
+  color: #512500;
+}
+
+.account-message-signup {
+  color: #512500;
+}
+
+.signup-form-wrapper {
+  background-image:url('../images/sweet-ice-cream-photography-79569.jpg');
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+}
+
+.login-container {
+  width: 80%;
+  text-align: center;
+}

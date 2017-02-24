@@ -1,22 +1,30 @@
-<h2>Signup</h2>
+<div class="signup-form-wrapper">
 
-<form action="/signup" method="POST" id="form-container">
-  <label for="username">Username</label>
-  <input type="text" name="username" placeholder="Username">
-  <br><br>
-  <label for="email">Email</label>
-  <input type="email" name="email" placeholder="Email">
-  <br><br>
-  <label for="password">Password</label>
-  <input type="password" name="password" placeholder="Your password">
-  <% if (typeof(message) != "undefined") { %>
-    <div class="error-message"><%= message %></div>
-  <% } %>
-  <br><br>
+  <div class="transparent-box">
+    <div class="signup-container">
+      <h2 class="signup-header">Sign Up</h2>
 
-  <button>Create account</button>
+      <form action="/signup" method="POST" class="form-container" >
+        <div class="signup-wrapper">
+          <input type="text" name="username" placeholder="Username">
+    
+          <input type="email" name="email" placeholder="Email">
 
-  <p class="account-message">
-    Do you already have an account? <a href="/login">Login</a>
-  </p>
-</form>
+          <input type="password" name="password" placeholder="Your password">
+          <% if (typeof(message) != "undefined") { %>
+            <div class="error-message"><%= message %></div>
+          <% } %>
+
+
+          <button class="custom-file-upload">Create account</button>
+
+          <p class="account-message-signup">
+            Do you already have an account? <a href="/login">Log In</a>
+          </p>
+        </div>
+      </form>
+    </div>
+</div>
+
+
+</div>

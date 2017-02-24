@@ -1,16 +1,20 @@
-<form action="/login" method="POST">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" name="username">
-  </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" name="password">
-  </div>
-  <% if (typeof(message) != "undefined") { %>
-    <div class="error-message"><%= message %></div>
-  <% } %>
-  <div>
-    <input type="submit" value="Log In">
-  </div>
-</form>
+<div class="login-page-wrapper">
+  <div class=transparent-box>
+    <div class=login-container>
+      <h2 class="login-header">Log In</h2>
+      <form action="/login" method="POST" class="form-container">
+        <div class="signup-wrapper">
+                  <input type="text" name="username" placeholder="Username">
+                  <input type="password" name="password" placeholder="Password">
+                <% if (typeof(message) != "undefined") { %>
+                  <div class="error-message"><%= message %></div>
+                <% } %>
+              <button class="custom-file-upload" type="submit" value="Log In">Log In</button>
+            <p class="account-message">
+              Don't have an account yet? <a href="/signup">Sign Up</a>
+            </p>
+        </div>
+      </form>
+    </div>
+    </div>
+</div>
