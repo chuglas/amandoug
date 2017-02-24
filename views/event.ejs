@@ -22,8 +22,9 @@
 
       <div class="width-100">
         <p> <%= eventObject.description %> </p>
-        <p> <%= eventObject.date%></p>
-      </div>
+        <% if (eventObject.date !== null) {%>
+          <p> <%= eventObject.date.toDateString()%></p>
+        <% }%>      </div>
     </div>
   </div>
 
@@ -31,7 +32,7 @@
     <section class="upload-section">
       <div class="upload-header">
         <h2>UPLOAD A NEW PHOTO</h2>
-      </div>  
+      </div>
       <form action='/<%= userParam %>/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" runat="server">
         <div class="upload-wrapper">
           <input type="text" name="description" placeholder="Photo Caption">

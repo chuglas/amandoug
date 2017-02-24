@@ -59,7 +59,7 @@ app.use(session({
 }));
 
 app.use(flash());
-const passport = require('./helpers/passport')
+const passport = require('./helpers/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
