@@ -361,8 +361,16 @@ a.event-box {
 .mobile-share-text {
   font: 16px 'Abel', sans-serif;
   display: none;
+  z-index: 1000;
+  color: white;
+  position: absolute;
+  top: 18px;
+  margin: 0;
 }
 
+.mobile-user-name {
+  display: block;
+}
 
 @media screen and (max-width: 786px) {
   .copy-wrapper {
@@ -370,6 +378,9 @@ a.event-box {
   }
   .mobile-share-text {
     display: block;
+  }
+  .mobile-user-name {
+    display: none;
   }
 }
 
