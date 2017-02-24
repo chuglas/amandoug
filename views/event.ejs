@@ -2,70 +2,67 @@
 
 <%- include('partials/header') %>
 
-<div class="page-margin--top">
-
-
-<div class="event-header">
-  <div class="event-details">
-    <h1> <%= eventObject.name %> </h1>
-
-
-    <% if( sameUser ) { %>
-      <a href="/<%= userParam %>/events/<%=eventObject.id%>/edit">
-        <div class="btn-edit">Edit Event</div>
-      </a>
-    <% } %>
-
-    <div class="width-100">
-      <p> <%= eventObject.description %> </p>
-      <p> <%= eventObject.date%></p>
-    </div>
-  </div>
-
-  <div class="copy-wrapper">
-    <div class="width-100">
-      <h3>SHARE THIS ALBUM</h3>
-    </div>
-    <div class="clipboard-wrapper width-100">
-      <input class="copy-link" id="post-shortlink" value="localhost:3000/events/<%=eventObject.id%>/public">
-      <button class="button copy-button" id="copy-button" data-clipboard-target="#post-shortlink">COPY LINK</button>
-    </div>
-  </div>
+<div class="copy-wrapper">
+  <button class="button copy-button" id="copy-button" data-clipboard-target="#post-shortlink">SHARE THIS ALBUM! CLICK HERE TO COPY LINK TO CLIPBOARD</button>
+  <input class="copy-link" id="post-shortlink" value="localhost:3000/events/<%=eventObject.id%>/public">
 </div>
 
-<% if( sameUser ) { %>
-  <section>
-    <form action='/<%= userParam %>/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" runat="server">
-    <div class="upload-wrapper">
-      <input type="text" name="description" placeholder="Photo Caption">
-      <label class="custom-file-upload">
-        <input type="file" name="file" id="imgInp">
-        Choose A Photo
-      </label>
-      <input class="save-new-photo" type="submit" value="Save New Photo">
+<div class="page-margin--top-large">
+
+  <div class="event-header">
+    <div class="event-details">
+      <h1> <%= eventObject.name %> </h1>
+
+
+      <% if( sameUser ) { %>
+        <a href="/<%= userParam %>/events/<%=eventObject.id%>/edit">
+          <div class="btn-edit">Edit Event</div>
+        </a>
+      <% } %>
+
+      <div class="width-100">
+        <p> <%= eventObject.description %> </p>
+        <p> <%= eventObject.date%></p>
+      </div>
     </div>
-    <div class="image-preview-wrapper">
-      <img id="image-preview" src="/images/camerabw-01.svg" alt="Image Preview" />
-    </div>
-    </form>
-  </section>
-<% } %>
-
-<% eventObject.eventPhotos.forEach((onePhoto) => { %>
-
-  <div class="photo-wrapper">
-    <img src="<%= onePhoto.url_path %>" />
-    <div class="photo-caption">
-      <p><%= onePhoto.description %></p>
-    </div>
-
-    <% if( sameUser ) { %>
-      <a href="/<%=userParam%>/events/<%=eventObject.id%>/<%=onePhoto.id%>/edit">
-        <div class="btn-edit photo-edit">Edit Photo</div>
-      </a>
-    <% } %>
-
   </div>
-<% }) %>
+
+  <% if( sameUser ) { %>
+    <section class="upload-section">
+      <div class="upload-header">
+        <h2>UPLOAD A NEW PHOTO</h2>
+      </div>  
+      <form action='/<%= userParam %>/events/<%=eventObject.id%>/upload' method="post" enctype="multipart/form-data" runat="server">
+        <div class="upload-wrapper">
+          <input type="text" name="description" placeholder="Photo Caption">
+          <label class="custom-file-upload">
+            <input type="file" name="file" id="imgInp">
+            Choose A Photo
+          </label>
+          <input class="save-new-photo" type="submit" value="Save New Photo">
+        </div>
+        <div class="image-preview-wrapper">
+          <img id="image-preview" src="/images/camerabw-01.svg" alt="Image Preview" />
+        </div>
+      </form>
+    </section>
+  <% } %>
+
+  <% eventObject.eventPhotos.forEach((onePhoto) => { %>
+
+    <div class="photo-wrapper">
+      <img src="<%= onePhoto.url_path %>" />
+      <div class="photo-caption">
+        <p><%= onePhoto.description %></p>
+      </div>
+
+      <% if( sameUser ) { %>
+        <a href="/<%=userParam%>/events/<%=eventObject.id%>/<%=onePhoto.id%>/edit">
+          <div class="btn-edit photo-edit">Edit Photo</div>
+        </a>
+      <% } %>
+
+    </div>
+  <% }) %>
 
 </div>
