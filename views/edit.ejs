@@ -2,31 +2,20 @@
 
 <div class="page-margin--top">
   <div class="center-new-event">
-
-  <div class="new-event-form">
-  <h1 class="edit-event-header">Edit event</h1>
-  <form action="/<%=userParam%>/events/<%= eventObject2._id %>" method="POST">
-      <div class="new-event-wrapper">
-    <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
-
-  <input type="text" name="description" value="<%= eventObject2.description %>"></input>
-
-    <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
-
-
-  <button type="submit" class="update-event">Update Event</button>
-
-  <form action="/<%=userParam%>/events/<%= eventObject2._id %>/delete" method="POST">
-      <button type="submit" class="delete-event">Delete Event</button>
-
-  </form>
-  </div>
-  </form>
-
-
-
-</div>
-
-</div>
-
+    <div class="new-event-form">
+      <h1 class="edit-event-header">Edit event</h1>
+        <form action="/<%=userParam%>/events/<%= eventObject2._id %>" method="POST">
+          <div class="new-event-wrapper">
+            <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
+            <input type="text" name="description" value="<%= eventObject2.description %>"></input>
+            <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
+            <button type="submit" class="update-event">Update Event</button>
+          </div>
+        </form>
+        <form action="/<%=userParam%>/events/<%= eventObject2._id %>/delete" method="POST">
+          <div class="new-event-wrapper">
+            <button type="submit" class="delete-event">Delete Event</button>
+          </div>
+        </form>
+    </div>
 </div>
