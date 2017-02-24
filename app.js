@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongo')(session);
 const auth = require('./helpers/auth');
 const moment        = require('moment');
 
+
 require("dotenv").config();
 
 
@@ -47,6 +48,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
 app.set('layout', 'layouts/main-layout');
+
+
 
 // express session middlewear
 app.use(session({
