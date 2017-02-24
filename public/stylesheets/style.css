@@ -510,3 +510,104 @@ form.form-container {
   width: 80%;
   text-align: center;
 }
+
+/*NEW EVENT FORM*/
+
+.new-event-form {
+  width: 80%;
+  text-align: center;
+}
+
+.center-new-event {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .center-new-event {
+    width: 100%;
+  }
+}
+
+.new-event-wrapper {
+  width: 100%;
+  z-index: 1;
+}
+
+.new-event-wrapper input {
+  width: 80%;
+  opacity: 1;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  background: white;
+  color: #512500;
+  /*margin-bottom: 10px;*/
+  font-family: 'Abel';
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.create-event {
+  width: 80%;
+  display: inline-block;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  background: #6BA368;
+  color: WhiteSmoke;
+  margin-bottom: 10px;
+  text-align: center;
+  transition: 300ms;
+  text-transform: uppercase;
+}
+
+.create-event:hover {
+  background: #7c8570
+}
+
+.delete-event {
+  width: 80%;
+  display: inline-block;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  background: #6BA368;
+  color: WhiteSmoke;
+  margin-bottom: 10px;
+  text-align: center;
+  transition: 300ms;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.delete-event:hover {
+  background: #7c8570
+}
+
+.update-event {
+  width: 80%;
+  display: inline-block;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  background: #6BA368;
+  color: WhiteSmoke;
+  margin-bottom: 10px;
+  text-align: center;
+  transition: 300ms;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.edit-event-header {
+  margin-bottom: 20px;
+}
+
+.update-event:hover {
+  background: #7c8570
+}

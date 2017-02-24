@@ -2,24 +2,27 @@
 
 <div class="page-margin--top">
 
-  <h2>New Event</h2>
+<div class="center-new-event">
 
+<div class="new-event-form">
+<h2 class="new-event-header">New Event</h2>
 
   <form action="/<%=userParam%>/events/new-event" method="POST" id="form-container">
-    <label for="name">Name</label>
+    <div class="new-event-wrapper">
     <input type="text" name="name" placeholder="Name">
     <br><br>
-    <label for="Description">Description</label>
     <input type="text" name="description" placeholder="description">
     <br><br>
-    <label for="date">Date</label>
     <input type="date" name="date" placeholder="Date">
     <% if (typeof(message) != "undefined") { %>
       <div class="error-message"><%= message %></div>
     <% } %>
     <br><br>
-    <button>Create Event</button>
-
+    <button class="create-event">Create Event</button>
+  </div>
   </form>
+</div>
+
+</div>
 
 </div>

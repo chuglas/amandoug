@@ -1,24 +1,32 @@
 <%- include('partials/header') %>
 
 <div class="page-margin--top">
+  <div class="center-new-event">
 
-  <h1>Edit event</h1>
+  <div class="new-event-form">
+  <h1 class="edit-event-header">Edit event</h1>
   <form action="/<%=userParam%>/events/<%= eventObject2._id %>" method="POST">
-    <label for="name">Name</label>
+      <div class="new-event-wrapper">
     <input type="text" id="name" name="name" value="<%= eventObject2.name %>">
-  <br><br>
-  <label for="description">Description</label>
-  <input type="text" name="description" value="<%= eventObject2.description %>"></input>
-  <br><br>
-    <label for="date">Date</label>
-    <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
-  <br><br>
 
-  <button type="submit">Update Event</button>
-  </form>
+  <input type="text" name="description" value="<%= eventObject2.description %>"></input>
+
+    <input type="date" name="date" id="date" value="<%= eventObject2.date %>">
+
+
+  <button type="submit" class="update-event">Update Event</button>
 
   <form action="/<%=userParam%>/events/<%= eventObject2._id %>/delete" method="POST">
-      <button type="submit">Delete Event</button>
+      <button type="submit" class="delete-event">Delete Event</button>
+
   </form>
+  </div>
+  </form>
+
+
+
+</div>
+
+</div>
 
 </div>
